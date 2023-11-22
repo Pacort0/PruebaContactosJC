@@ -25,7 +25,7 @@ data class Producto(
     val isChecked:Boolean
 )
 
-@Entity
+@Entity(tableName = "tiendas")
 data class Tienda(
     @ColumnInfo(name = "tienda_id")
     @PrimaryKey(autoGenerate = true)
