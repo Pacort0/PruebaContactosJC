@@ -20,7 +20,7 @@ data class Producto(
     val nombreProducto:String,
     val cantidad:Int,
     val listaIdFk:Int, //Foreign key del id de la tabla lista
-    val tiendaIdFk:Int, //Foreign key del id de la tabla tienda
+    val tiendaIdFk_Productos:Int, //Foreign key del id de la tabla tienda
     val date:Date,
     val isChecked:Boolean
 )
@@ -30,5 +30,5 @@ data class Tienda(
     @ColumnInfo(name = "tienda_id")
     @PrimaryKey(autoGenerate = true)
     val id:Int = 0,
-    val listaIdFk:Int //Foreign key del id de la tabla lista
+    val listaIdFk_Tiendas:Int //Foreign key del id de la tabla lista
 )

@@ -54,26 +54,31 @@ interface ListaDao{
     @Query("""
        SELECT * FROM productos AS P INNER JOIN lista_compra AS LC 
         ON P.listaIdFk = LC.lista_id INNER JOIN tiendas AS T
-        ON P.tiendaIdFk = T.tienda_id
+        ON P.tiendaIdFk_Productos = T.tienda_id
     """)
-    fun getProductosConTiendaYLista(listaId:Int):Flow<List<ProductosConTiendaYLista>>
+    fun getProductosConTiendaYLista():Flow<List<ProductosConTiendaYLista>>
 
     @Query("""
        SELECT * FROM productos AS P INNER JOIN lista_compra AS LC 
         ON P.listaIdFk = LC.lista_id INNER JOIN tiendas AS T
-        ON P.tiendaIdFk = T.tienda_id WHERE P.producto_id = :productoId
+        ON P.tiendaIdFk_Productos = T.tienda_id WHERE P.producto_id = :productoId
     """)
     fun getProductoConTiendaYListaFiltradosPorId(productoId:Int):Flow<List<ProductosConTiendaYLista>>
 
     @Query("""
        SELECT * FROM productos AS P INNER JOIN lista_compra AS LC 
         ON P.listaIdFk = LC.lista_id INNER JOIN tiendas AS T
-        ON P.tiendaIdFk = T.tienda_id WHERE LC.lista_id= :listaId
+        ON P.tiendaIdFk_Productos = T.tienda_id WHERE LC.lista_id= :listaId
     """)
     fun getProductosConTiendaYListaFiltradosPorId(listaId:Int):Flow<List<ProductosConTiendaYLista>>
 }
 
+/**
+ * Como no tenemos ninguna data class que pueda almacenar tres objetos a la vez (para la última query)
+ * creamos una data class que contenga objetos producto, listaCompra y Tienda
+ */
 data class ProductosConTiendaYLista(
+    //Embedded (incorporado) se usa cuando usamos una join query
     @Embedded val producto:Producto,
     @Embedded val listaCompra: ListaCompra,
     @Embedded val tienda: Tienda
